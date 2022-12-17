@@ -1,14 +1,33 @@
 import React from 'react';
 import Add from "../img/7224509.png";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../Firebase";
+import { useState } from 'react';
 
 const Register = () => {
+    const [err, setErr] = useState(false);
+    const hadleSubmit = async (e) => {   
+        e.preventDefault();
+        const displayName = e.target[0].value;
+        const email = e.target[1].value;
+        const password = e.target[2].value;
+        const file = e.target[3].files[0];
+
+        try {
+            const res = await createUserWithEmailAndPassword(auth, email, password);
+        }
+        catch(err) {
+            setErr(true);
+        }
+
+    }; 
     return (
 
         <div className="formContainer">
             <div className="formWrapper">
                 <span className="logo">Rupen's space</span>
                 <span className="title">Register</span>
-                <form>
+                <form onSubmit={hadleSubmit}>
                     <input type="text" placeholder='display name'></input>
                     <input type="email" placeholder='email'></input>
                     <input type="password" placeholder='password'></input>
@@ -18,6 +37,7 @@ const Register = () => {
                         <span>Add an avatar</span>
                     </label>
                     <button>Sign Up</button>
+                    {err && <span>something went wrong</span>}
                 </form>
                 <p>You have an account? Login</p>
             </div>
