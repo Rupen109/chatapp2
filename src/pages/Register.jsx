@@ -1,12 +1,14 @@
 import React from "react";
 import Add from "../img/7224509.png";
 import { createUserWithEmailAndPassword,updateProfile } from "firebase/auth";
-import { storage, auth } from "../Firebase";
+import { storage, db,auth } from "../Firebase";
 import { useState } from "react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { doc, setDoc } from "firebase/firestore"; 
 
 const Register = () => {
     const [err, setErr] = useState(false);
+
     const hadleSubmit = async (e) => {
         e.preventDefault();
         const displayName = e.target[0].value;
@@ -20,11 +22,6 @@ const Register = () => {
             const storageRef = ref(storage, displayName);
 
             const uploadTask = uploadBytesResumable(storageRef, file);
-
-            // Register three observers:
-            // 1. 'state_changed' observer, called any time the state changes
-            // 2. Error observer, called on failure
-            // 3. Completion observer, called on successful completion
             uploadTask.on(
                 (error) => {
                     setErr(true);
@@ -32,12 +29,19 @@ const Register = () => {
                 () => {
                     getDownloadURL(uploadTask.snapshot.ref).then(async(downloadURL) => {
                         await updateProfile(res.user, {
+                            displayName,    
+                            photoURL: downloadURL,
+                        });
+                        await setDoc(doc(db, "users", res.user.uid), {
+                            uid: res.user.uid,
                             displayName,
-                            photoURL:downloadURL,
-                        })
+                            email,
+                            photoURL: downloadURL,
+                        });
                     });
                 }
             );
+
         } catch (err) {
             setErr(true);
         }
