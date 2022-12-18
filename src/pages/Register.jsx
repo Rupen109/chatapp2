@@ -5,9 +5,11 @@ import { storage, db,auth } from "../Firebase";
 import { useState } from "react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore"; 
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
     const [err, setErr] = useState(false);
+    const navigate = useNavigate();
 
     const hadleSubmit = async (e) => {
         e.preventDefault();
@@ -38,6 +40,9 @@ const Register = () => {
                             email,
                             photoURL: downloadURL,
                         });
+
+                        await setDoc(doc(db, "userChats", res.user.uid), {})
+                        navigate("/");
                     });
                 }
             );
