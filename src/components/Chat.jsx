@@ -8,13 +8,14 @@ const Chat = () => {
   return (
     <div className='chat'>
       <div className="chatInfo">
-        <span>Jane</span>
+        <span>Jane doe</span>
         <div className="chatIcons">
           <img src={call} alt="" />
           <img src={more} alt="" />
           <img src={more} alt="" />
         </div>
       </div>
+    
       <Messagess />
       <Input />
     </div>

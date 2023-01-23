@@ -9,8 +9,8 @@ const Messagess = () => {
           <Message />
           <Message />
           <Message />
-          <Message />
-          <Message />
+          {/* <Message /> */}
+          {/* <Message /> */}
       </div>
   );
 }
