@@ -50,7 +50,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../Firebase";
 
 const Login = () => {
-    const [err, setErr] = useState(false);
+    const [err, setErr] = useState(false); 
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
