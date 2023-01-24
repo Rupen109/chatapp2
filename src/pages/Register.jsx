@@ -113,7 +113,7 @@ const Register = () => {
                             displayName,
                             photoURL: downloadURL,
                         });
-                       
+
                         //create users on firestore
                         await setDoc(doc(db, "users", res.user.uid), {
                             uid: res.user.uid,
@@ -122,9 +122,10 @@ const Register = () => {
                             photoURL: downloadURL,
                         });
 
+                        //create userChats on firestore
                         await setDoc(doc(db, "userChats", res.user.uid), {
                             
-                        })
+                        });
                         navigate("/");
                         //create empty user chats on firestore
                         // await setDoc(doc(db, "userChats", res.user.uid), {});
